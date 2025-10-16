@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Транспорт Вятки</title>
+
+<!-- Museo Cyrl -->
+<link href="https://fonts.cdnfonts.com/css/museo-cyrl-100" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #000;
+    --text: #fff;
+    --card: #1a1a1a;
+    --accent: rgba(255,255,255,0.25);
+    --radius: 22px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: 'Museo Cyrl 100', 'Museo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 24px;
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 40px;
+    margin-bottom: 30px;
+    animation: fadeIn 0.7s ease;
+  }
+
+  header img { height: 80px; }
+
+  /* Новый iOS-переключатель */
+  .switcher {
+    position: relative;
+    display: flex;
+    width: 320px;
+    height: 52px;
+    background: rgba(255,255,255,0.08);
+    border-radius: var(--radius);
+    backdrop-filter: blur(15px);
+    overflow: hidden;
+    margin-bottom: 22px;
+    user-select: none;
+    font-family: 'Museo Cyrl 100', 'Museo', sans-serif;
+  }
+
+  .switcher span {
+    flex: 1;
+    text-align: center;
+    line-height: 52px;
+    font-size: 20px;
+    font-weight: 500;
+    z-index: 2;
+    color: rgba(255,255,255,0.7);
+    cursor: pointer;
+    transition: color 0.25s ease;
+  }
+
+  .switcher span.active {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .switcher .slider {
+    position: absolute;
+    top: 3px;
+    bottom: 3px;
+    width: calc(50% - 6px);
+    background: var(--accent);
+    border-radius: var(--radius);
+    transition: all 0.3s ease;
+    z-index: 1;
+  }
+
+  .switcher.routes .slider {
+    left: calc(50% + 3px);
+  }
+
+  .switcher.stops .slider {
+    left: 3px;
+  }
+
+  .search-box {
+    width: 100%;
+    max-width: 600px;
+    position: relative;
+    margin-bottom: 30px;
+    animation: slideDown 0.5s ease;
+  }
+
+  .search-box input {
+    width: 100%;
+    padding: 18px 22px;
+    border: none;
+    border-radius: var(--radius);
+    background: rgba(255,255,255,0.08);
+    color: var(--text);
+    font-size: 20px;
+    outline: none;
+    backdrop-filter: blur(20px);
+    transition: all 0.3s ease;
+    font-family: 'Museo Cyrl 100', 'Museo', sans-serif;
+  }
+
+  .search-box input:focus {
+    background: rgba(255,255,255,0.15);
+  }
+
+  .stop-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 100%;
+    max-width: 600px;
+    animation: fadeIn 0.6s ease;
+  }
+
+  .stop-card, .route-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.35);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .stop-card:hover, .route-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(255,255,255,0.1);
+  }
+
+  .stop-title {
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .stop-dir {
+    font-size: 16px;
+    color: #aaa;
+    margin-bottom: 10px;
+  }
+
+  .routes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .route {
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    padding: 5px 9px;
+    border-radius: 8px;
+    display: inline-block;
+    min-width: 28px;
+    text-align: center;
+  }
+
+  /* Цвета маршрутов */
+  .bus-red { background: #e53935; }
+  .bus-blue { background: #1e88e5; }
+  .bus-yellow { background: #fdd835; color: #000; }
+  .bus-white { background: #e0e0e0; color: #000; }
+  .bus-azimuth { background: #e0e0e0; color: #ff0400; }
+
+  /* Карточки маршрутов */
+  .route-card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+.route-num {
+  font-size: 36px;
+  font-weight: 700;
+  padding: 12px 20px;
+  border-radius: 12px;
+  min-width: 70px;
+  text-align: center;
+  display: inline-block;
+}
+
+/* Цвета маршрутов (те же, что у .route) */
+.bus-red { background: #e53935; color: #fff; }
+.bus-blue { background: #1e88e5; color: #fff; }
+.bus-yellow { background: #fdd835; color: #000; }
+.bus-white { background: #e0e0e0; color: #000; }
+.bus-azimuth { background: #e0e0e0; color: #ff0400; }
+
+
+  .route-info {
+    flex: 1;
+    text-align: center;
+  }
+
+  .route-stops {
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+
+  footer {
+    margin-top: auto;
+    opacity: 0.7;
+    padding: 30px 0 20px 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  footer img {
+    height: 50px;
+    opacity: 0.85;
+    transition: opacity 0.2s ease;
+  }
+
+  footer img:hover { opacity: 1; }
+
+  @keyframes fadeIn {
+    from {opacity: 0; transform: translateY(10px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+
+  @keyframes slideDown {
+    from {opacity: 0; transform: translateY(-10px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <img src="logo.png" alt="logo">
+</header>
+
+<div class="switcher stops" id="modeSwitcher">
+  <div class="slider"></div>
+  <span id="labelStops" class="active">Остановки</span>
+  <span id="labelRoutes">Маршруты</span>
+</div>
+
+<div class="search-box">
+  <input type="text" id="search" placeholder="введите код, название или маршрут">
+</div>
+
+<div class="stop-list" id="stopList"></div>
+
+<footer>
+  <img src="footer-logo.png" alt="footer logo">
+</footer>
+
+<script>
+  const stops = [
+  { code: 262, name: "улица Морозовская", dir: "в направлении остановки 259 | Областной дом народного творчества", routes: [{num:"т3",color:"bus-red"},{num:"33",color:"bus-azimuth"},{num:"39",color:"bus-azimuth"}, {num:"53",color:"bus-white"}, {num:"54",color:"bus-azimuth"}, {num:"61",color:"bus-red"}, {num:"70",color:"bus-yellow"}, {num:"90",color:"bus-blue"},] },
+  { code: 230, name: "Офтальмологическая больница", dir: "в направлении остановки 1283 | площадь XX партсъезда", routes: [{num:"т1",color:"bus-blue"}, {num:"т3",color:"bus-red"}, {num:"т4",color:"bus-blue"},{num:"19",color:"bus-white"},{num:"33",color:"bus-azimuth"},{num:"90",color:"bus-blue"},] },
+  { code: 226, name: "Офтальмологическая больница", dir: "в направлении остановки 233 | Дом дружбы народов", routes: [{num:"т1",color:"bus-blue"}, {num:"т3",color:"bus-red"}, {num:"т4",color:"bus-blue"},{num:"19",color:"bus-white"},{num:"33",color:"bus-azimuth"},{num:"90",color:"bus-blue"},] },
+  { code: 233, name: "Дом дружбы народов", dir: "в направлении остановки 248 | Шестая больница", routes: [{num:"т1",color:"bus-blue"},{num:"т3",color:"bus-red"}, {num:"т4",color:"bus-blue"},{num:"20",color:"bus-white"},{num:"33",color:"bus-azimuth"},{num:"47",color:"bus-red"},{num:"54",color:"bus-azimuth"},{num:"70",color:"bus-yellow"},{num:"74",color:"bus-yellow"},{num:"90",color:"bus-blue"}, ] },
+  { code: 250, name: "улица Гайдара", dir: "в направлении остановки 131 | площадь им. Лепсе", routes: [{num:"т1",color:"bus-blue"},{num:"т3",color:"bus-red"}, {num:"т4",color:"bus-blue"},{num:"22",color:"bus-azimuth"},{num:"33",color:"bus-azimuth"},{num:"44",color:"bus-red"},{num:"46",color:"bus-white"},{num:"47",color:"bus-red"},{num:"51",color:"bus-azimuth"},{num:"53",color:"bus-white"},{num:"54",color:"bus-azimuth"},{num:"70",color:"bus-yellow"},{num:"74",color:"bus-yellow"},{num:"90",color:"bus-blue"},] },
+  { code: 47, name: "улица Гайдара", dir: "в направлении остановки 234 | Дом дружбы народов", routes: [{num:"т1",color:"bus-blue"},{num:"т3",color:"bus-red"}, {num:"т4",color:"bus-blue"},{num:"22",color:"bus-azimuth"},{num:"33",color:"bus-azimuth"},{num:"44",color:"bus-red"},{num:"46",color:"bus-white"},{num:"47",color:"bus-red"},{num:"51",color:"bus-azimuth"},{num:"53",color:"bus-white"},{num:"54",color:"bus-azimuth"},{num:"70",color:"bus-yellow"},{num:"74",color:"bus-yellow"},{num:"90",color:"bus-blue"},] },
+  { code: 131, name: "площадь им. Лепсе", dir: "в направлении остановки 254 | Троллейбусный парк", routes: [ {num:"т1",color:"bus-blue"}, {num:"т3",color:"bus-red"}, {num:"т4",color:"bus-blue"}, {num:"т5",color:"bus-blue"}, {num:"1",color:"bus-red"}, {num:"2",color:"bus-white"}, {num:"10",color:"bus-azimuth"}, {num:"23",color:"bus-red"}, {num:"33",color:"bus-azimuth"}, {num:"46",color:"bus-white"}, {num:"47",color:"bus-red"}, {num:"51",color:"bus-azimuth"}, {num:"53",color:"bus-white"}, {num:"54",color:"bus-azimuth"}, {num:"61",color:"bus-red"}, {num:"70",color:"bus-yellow"}, {num:"90",color:"bus-blue"} ] },
+  { code: 1394, name: "ТРЦ «Макси»", dir: "конечная", routes: [ {num:"61",color:"bus-red"}, {num:"9",color:"bus-azimuth"}, {num:"38",color:"bus-azimuth"} ] }
+];
+
+  const routes = [
+    { num: "т1", color: "bus-blue", from: "площадь XX партсъезда", to: "Завод 'Сельмаш'" },
+    { num: "т3", color: "bus-red", from: "площадь XX партсъезда", to: "улица Чапаева" },
+    { num: "т4", color: "bus-blue", from: "площадь XX партсъезда", to: "улица Чапаева" },
+    { num: "33", color: "bus-azimuth", from: "Садаковская мебельная фабрика", to: "улица Боровая" }
+  ];
+
+  const list = document.getElementById('stopList');
+  const input = document.getElementById('search');
+  const switcher = document.getElementById('modeSwitcher');
+  const labelStops = document.getElementById('labelStops');
+  const labelRoutes = document.getElementById('labelRoutes');
+
+  let mode = "stops";
+
+  switcher.onclick = (e) => {
+    if (mode === "stops") {
+      mode = "routes";
+      switcher.classList.remove("stops");
+      switcher.classList.add("routes");
+      labelStops.classList.remove("active");
+      labelRoutes.classList.add("active");
+    } else {
+      mode = "stops";
+      switcher.classList.remove("routes");
+      switcher.classList.add("stops");
+      labelRoutes.classList.remove("active");
+      labelStops.classList.add("active");
+    }
+    filterData();
+  };
+
+  function renderStops(data) {
+    list.innerHTML = "";
+    if (!data.length) {
+      list.innerHTML = `<div style="text-align:center;opacity:0.6;font-size:18px;">ничего не найдено</div>`;
+      return;
+    }
+    data.forEach(stop => {
+      const card = document.createElement('div');
+      card.className = 'stop-card';
+      const routeHTML = stop.routes.map(r => `<span class="route ${r.color}">${r.num}</span>`).join('');
+      card.innerHTML = `
+        <div class="stop-title">${stop.code} | ${stop.name}</div>
+        <div class="stop-dir">${stop.dir}</div>
+        <div class="routes">${routeHTML}</div>
+      `;
+      list.appendChild(card);
+    });
+  }
+
+function renderRoutes(data) {
+  list.innerHTML = "";
+  if (!data.length) {
+    list.innerHTML = `<div style="text-align:center;opacity:0.6;font-size:18px;">ничего не найдено</div>`;
+    return;
+  }
+  data.forEach(r => {
+    const card = document.createElement('div');
+    card.className = 'route-card';
+    card.innerHTML = `
+      <div class="route-num ${r.color}">${r.num}</div>
+      <div class="route-info">
+        <div class="route-stops">${r.from} — ${r.to}</div>
+      </div>
+    `;
+    list.appendChild(card);
+  });
+}
+
+
+
+  function filterData() {
+    const val = input.value.trim().toLowerCase();
+    if (mode === "stops") {
+      const filtered = stops.filter(s =>
+        s.name.toLowerCase().includes(val) || String(s.code).includes(val)
+      );
+      renderStops(filtered);
+    } else {
+      const filtered = routes.filter(r =>
+        r.num.toLowerCase().includes(val) ||
+        r.from.toLowerCase().includes(val) ||
+        r.to.toLowerCase().includes(val)
+      );
+      renderRoutes(filtered);
+    }
+  }
+
+  input.oninput = filterData;
+  renderStops(stops);
+</script>
+
+</body>
+</html>
