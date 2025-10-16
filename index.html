@@ -5,10 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Транспорт Вятки</title>
 
-<!-- Museo Cyrl -->
-<link href="https://fonts.cdnfonts.com/css/museo-cyrl-100" rel="stylesheet" crossorigin="anonymous">
+<!-- Preload шрифта для быстрой загрузки на iOS -->
+<link rel="preload" href="Museo Cyrl 100.otf" as="font" type="font/otf" crossorigin="anonymous">
 
 <style>
+  /* Подключение локального шрифта Museo Cyrl 100 для iOS Safari */
+  @font-face {
+    font-family: 'Museo Cyrl 100';
+    src: url('Museo Cyrl 100.otf') format('opentype'),
+         url('Museo Cyrl 100.ttf') format('truetype'),
+         url('Museo Cyrl 100.woff2') format('woff2'),
+         url('Museo Cyrl 100.woff') format('woff');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap; /* Улучшает производительность загрузки */
+  }
   :root {
     --bg: #000;
     --text: #fff;
@@ -21,7 +32,7 @@
 
   body {
     margin: 0;
-    font-family: 'Museo Cyrl 100', 'Museo', sans-serif;
+    font-family: 'Museo Cyrl 100', 'Museo', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial Unicode MS', Arial, sans-serif;
     background: var(--bg);
     color: var(--text);
     display: flex;
@@ -54,7 +65,7 @@
     overflow: hidden;
     margin-bottom: 22px;
     user-select: none;
-    font-family: 'Museo Cyrl 100', 'Museo', sans-serif;
+    font-family: 'Museo Cyrl 100', 'Museo', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial Unicode MS', Arial, sans-serif;
   }
 
   .switcher span {
@@ -112,7 +123,7 @@
     outline: none;
     backdrop-filter: blur(20px);
     transition: all 0.3s ease;
-    font-family: 'Museo Cyrl 100', 'Museo', sans-serif;
+    font-family: 'Museo Cyrl 100', 'Museo', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial Unicode MS', Arial, sans-serif;
   }
 
   .search-box input:focus {
@@ -238,6 +249,15 @@
     from {opacity: 0; transform: translateY(-10px);}
     to {opacity: 1; transform: translateY(0);}
   }
+
+  /* Тестовый элемент для проверки загрузки шрифта */
+  .font-test {
+    position: fixed;
+    top: -100px;
+    left: -100px;
+    font-family: 'Museo Cyrl 100', monospace;
+    visibility: hidden;
+  }
 </style>
 </head>
 <body>
@@ -245,6 +265,9 @@
 <header>
   <img src="logo.png" alt="logo">
 </header>
+
+<!-- Тестовый элемент для проверки загрузки шрифта -->
+<div class="font-test">АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ абвгдежзийклмнопрстуфхцчшщъыьэюя</div>
 
 <div class="switcher stops" id="modeSwitcher">
   <div class="slider"></div>
@@ -365,6 +388,27 @@ function renderRoutes(data) {
 
   input.oninput = filterData;
   renderStops(stops);
+
+  // Проверка загрузки шрифта
+  function checkFontLoaded() {
+    if (document.fonts && document.fonts.check) {
+      const isMuseoLoaded = document.fonts.check('100 16px "Museo Cyrl 100"');
+      console.log('Museo Cyrl 100 загружен:', isMuseoLoaded);
+      
+      if (!isMuseoLoaded) {
+        console.warn('Шрифт Museo Cyrl 100 не загружен. Используются fallback шрифты.');
+        // Можно добавить дополнительную обработку
+      }
+    }
+  }
+
+  // Проверяем загрузку шрифта после загрузки страницы
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(checkFontLoaded);
+  } else {
+    // Fallback для старых браузеров
+    setTimeout(checkFontLoaded, 1000);
+  }
 </script>
 
 </body>
