@@ -294,14 +294,55 @@
   { code: 250, name: "улица Гайдара", dir: "в направлении остановки 131 | площадь им. Лепсе", routes: [{num:"т1",color:"bus-blue"},{num:"т3",color:"bus-red"}, {num:"т4",color:"bus-blue"},{num:"22",color:"bus-azimuth"},{num:"33",color:"bus-azimuth"},{num:"44",color:"bus-red"},{num:"46",color:"bus-white"},{num:"47",color:"bus-red"},{num:"51",color:"bus-azimuth"},{num:"53",color:"bus-white"},{num:"54",color:"bus-azimuth"},{num:"70",color:"bus-yellow"},{num:"74",color:"bus-yellow"},{num:"90",color:"bus-blue"},] },
   { code: 47, name: "улица Гайдара", dir: "в направлении остановки 234 | Дом дружбы народов", routes: [{num:"т1",color:"bus-blue"},{num:"т3",color:"bus-red"}, {num:"т4",color:"bus-blue"},{num:"22",color:"bus-azimuth"},{num:"33",color:"bus-azimuth"},{num:"44",color:"bus-red"},{num:"46",color:"bus-white"},{num:"47",color:"bus-red"},{num:"51",color:"bus-azimuth"},{num:"53",color:"bus-white"},{num:"54",color:"bus-azimuth"},{num:"70",color:"bus-yellow"},{num:"74",color:"bus-yellow"},{num:"90",color:"bus-blue"},] },
   { code: 131, name: "площадь им. Лепсе", dir: "в направлении остановки 254 | Троллейбусный парк", routes: [ {num:"т1",color:"bus-blue"}, {num:"т3",color:"bus-red"}, {num:"т4",color:"bus-blue"}, {num:"т5",color:"bus-blue"}, {num:"1",color:"bus-red"}, {num:"2",color:"bus-white"}, {num:"10",color:"bus-azimuth"}, {num:"23",color:"bus-red"}, {num:"33",color:"bus-azimuth"}, {num:"46",color:"bus-white"}, {num:"47",color:"bus-red"}, {num:"51",color:"bus-azimuth"}, {num:"53",color:"bus-white"}, {num:"54",color:"bus-azimuth"}, {num:"61",color:"bus-red"}, {num:"70",color:"bus-yellow"}, {num:"90",color:"bus-blue"} ] },
+  { code: 894, name: "Садаковская мебельная фабрика", dir: "в направлении остановки 892 | улица Трудовая", routes: [{num:"33",color:"bus-azimuth"}] },
+
   { code: 1394, name: "ТРЦ «Макси»", dir: "конечная", routes: [ {num:"61",color:"bus-red"}, {num:"9",color:"bus-azimuth"}, {num:"38",color:"bus-azimuth"} ] }
 ];
 
-  const routes = [
+const routes = [
+    // Троллейбусы
     { num: "т1", color: "bus-blue", from: "площадь XX партсъезда", to: "Завод 'Сельмаш'" },
     { num: "т3", color: "bus-red", from: "площадь XX партсъезда", to: "улица Чапаева" },
     { num: "т4", color: "bus-blue", from: "площадь XX партсъезда", to: "улица Чапаева" },
-    { num: "33", color: "bus-azimuth", from: "Садаковская мебельная фабрика", to: "улица Боровая" }
+    { num: "т5", color: "bus-blue", from: "площадь XX партсъезда", to: "площадь Лепсе" },
+
+    // Автобусы
+    { num: "1", color: "bus-azimuth", from: "Ипподром", to: "Инфекционная больница" },
+    { num: "2", color: "bus-white", from: "улица Московская", to: "деревня Хабаровы" },
+    { num: "3", color: "bus-red", from: "Железнодорожный вокзал", to: "Силикатный завод" },
+    { num: "5", color: "bus-red", from: "улица Заводская", to: "улица Песочная" },
+    { num: "8", color: "bus-azimuth", from: "Автовокзал", to: "Протезно-ортопедическое предприятие" },
+    { num: "9", color: "bus-azimuth", from: "ТРЦ Макси", to: "улица Песочная" },
+    { num: "10", color: "bus-azimuth", from: "улица Ярославская", to: "улица Лесозаводская" },
+    { num: "11", color: "bus-azimuth", from: "площадь ХХ партсъезда", to: "Европейские улочки" },
+    { num: "12", color: "bus-azimuth", from: "улица Ярославская", to: "Чистые пруды" },
+    { num: "14", color: "bus-azimuth", from: "Европейские улочки", to: "Силикатный завод" },
+    { num: "15", color: "bus-azimuth", from: "Европейские улочки", to: "улица Боровая" },
+    { num: "16", color: "bus-white", from: "Механический завод (Нововятск)", to: "Европейские улочки" },
+    { num: "19", color: "bus-white", from: "Северная больница", to: "деревня Хабаровы" },
+    { num: "20", color: "bus-azimuth", from: "Северная больница", to: "Очистные сооружения" },
+    { num: "21", color: "bus-red", from: "Ипподром", to: "село Порошино" },
+    { num: "22", color: "bus-azimuth", from: "ТРЦ Фестиваль", to: "деревня Хабаровы" },
+    { num: "23", color: "bus-red", from: "улица Андрея Упита", to: "Дворец творчества Мемориал" },
+    { num: "26", color: "bus-white", from: "ТЭЦ-5", to: "Северная больница" },
+    { num: "33", color: "bus-azimuth", from: "посёлок Садаковский", to: "улица Боровая" },
+    { num: "38", color: "bus-azimuth", from: "ТРЦ Макси", to: "улица Песочная" },
+    { num: "39", color: "bus-azimuth", from: "Метроград", to: "улица Заводская" },
+    { num: "44", color: "bus-red", from: "микрорайон Радужный", to: "площадь XX партсъезда" },
+    { num: "46", color: "bus-white", from: "площадь XX партсъезда", to: "улица Кирова (Нововятск)" },
+    { num: "47", color: "bus-red", from: "Инфекционная больница", to: "Северная больница" },
+    { num: "50", color: "bus-white", from: "площадь XX партсъезда", to: "Ипподром" },
+    { num: "51", color: "bus-azimuth", from: "Завод приводных цепей", to: "площадь XX партсъезда" },
+    { num: "52", color: "bus-white", from: "микрорайон Радужный", to: "улица Кирова" },
+    { num: "53", color: "bus-white", from: "посёлок Дороничи", to: "площадь XX партсъезда" },
+    { num: "54", color: "bus-azimuth", from: "микрорайон Радужный", to: "Северная больница" },
+    { num: "61", color: "bus-red", from: "ТРЦ Макси", to: "Ипподром" },
+    { num: "67", color: "bus-white", from: "Металлобаза", to: "улица Красной звезды" },
+    { num: "70", color: "bus-yellow", from: "Ипподром", to: "Северная больница" },
+    { num: "74", color: "bus-yellow", from: "Ипподром", to: "Северная больница" },
+    { num: "84", color: "bus-white", from: "Ипподром", to: "деревня Малая Субботиха" },
+    { num: "87", color: "bus-white", from: "улица Кирова (Нововятск)", to: "проспект Строителей" },
+    { num: "90", color: "bus-blue", from: "площадь XX партсъезда", to: "ТЭЦ-5" },
   ];
 
   const list = document.getElementById('stopList');
