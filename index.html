@@ -196,14 +196,19 @@
   }
 
 .route-num {
-  font-size: 36px;
+  font-size: 38px;
   font-weight: 700;
-  padding: 12px 20px;
   border-radius: 12px;
-  min-width: 70px;
+  color: #fff;
+  width: 70px;          /* фиксированная ширина */
+  height: 60px;         /* фиксированная высота */
+  display: flex;        /* центрируем текст */
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  display: inline-block;
+  flex-shrink: 0;
 }
+
 
 /* Цвета маршрутов (те же, что у .route) */
 .bus-red { background: #e53935; color: #fff; }
